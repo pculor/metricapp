@@ -110,7 +110,6 @@ var InfluxModel = /** @class */ (function () {
                 queryObserver = {
                     next: function (row, tableMeta) {
                         var record = tableMeta.toObject(row);
-                        winston_config_1.default.info(record);
                         tableRecords.push(record);
                     },
                     error: function (error) {

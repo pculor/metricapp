@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf bin && tsc",
-    "test": "jest",
+    "test": "NODE_ENV=test jest --detectOpenHandles --coverage --runInBand --forceExit",
     "prestart": "npm run build",
-    "start": "cross-env NODE_ENV=production node bin/app.js",
+    "start": "cross-env NODE_ENV=production concurrently \"node bin/app.js\" \"npm run client\"",
     "preserver": "npm run build",
     "server": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon --exec node bin/app.js\"",
-    "start:dev": "concurrently \"npm run server\"",
+    "client": "cd client && npm install && npm run build",
+    "client:dev": "cd client && npm install && npm start",
+    "start:dev": "concurrently \"npm run server\" \"npm run client:dev\"",
     "lint": "eslint --fix server/",
     "format": "npx prettier --write ."
   },

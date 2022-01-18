@@ -93,7 +93,6 @@ class InfluxModel {
     const queryObserver = {
       next(row, tableMeta) {
         const record = tableMeta.toObject(row);
-        logger.info(record);
         tableRecords.push(record);
       },
       error(error) {

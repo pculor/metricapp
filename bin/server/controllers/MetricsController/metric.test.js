@@ -50,7 +50,7 @@ describe('server', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
-                        .get("".concat(baseUrl, "/metric"))
+                        .get("".concat(baseUrl, "/metrics"))
                         .expect(200)
                         .expect('Content-Type', /json/)];
                 case 1:
@@ -67,5 +67,4 @@ describe('server', function () {
             }
         });
     }); });
-    it('[GET]/ 404 Fail for invalid routes', function () { return (0, supertest_1.default)(server_1.default).get('/wrong').expect(404); });
 });
