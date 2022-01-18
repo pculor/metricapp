@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import { Joi, joiValidate } from '../helpers/joiValidate';
 
 /**
@@ -29,7 +31,7 @@ class Validations {
         'any.required': 'value is not allowed to be empty',
       }),
     });
-    req.payload = await joiValidate(payload, schema);
+    req.payload = await joiValidate(payload, schema, req, res, next);
     return next();
   }
 
@@ -57,7 +59,7 @@ class Validations {
       avg: Joi.number().optional().allow('', null),
       start: Joi.number().optional().allow('', null),
     });
-    req.payload = await joiValidate(payload, schema);
+    req.payload = await joiValidate(payload, schema, req, res, next);
     return next();
   }
 }

@@ -6,6 +6,7 @@ import { success, errorHandler, OK } from 'request-response-handler';
 import morganMiddleware from '../config/morgan.config';
 // eslint-disable-next-line import/no-unresolved
 import logger from '../config/winston.config';
+import router from '../routes';
 
 const app: express.Application = express();
 
@@ -30,6 +31,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.render('error');
   next();
 });
+
+app.use('/api/v1', router);
 
 app.get('/', (req: Request, res: Response) => {
   success(res, OK, 'Welcome to API root', {

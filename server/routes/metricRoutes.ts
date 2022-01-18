@@ -1,7 +1,9 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import { Router } from 'express';
 
-const Validations = require('../middleware/Validations');
-const MetricsController = require('../controllers/MetricsController');
+import Validations from '../middleware/Validations';
+import MetricsController from '../controllers/MetricsController';
 
 const router = Router();
 

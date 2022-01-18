@@ -1,11 +1,12 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import 'dotenv/config';
 import { InfluxDB, Point } from '@influxdata/influxdb-client';
 import {
   success, OK, NOT_FOUND, customError,
 } from 'request-response-handler';
-import envConfigs from './config/config';
-// eslint-disable-next-line import/no-unresolved
-import logger from '../../server/config/winston.config';
+import envConfigs from '../config/config';
+import logger from '../../config/winston.config';
 
 const env = process.env.NODE_ENV || 'development';
 const config = envConfigs[env];
@@ -43,7 +44,6 @@ class InfluxModel {
     const { name } = params;
     const value = (params.value * 1).toFixed(2);
     const { timeStamp } = params;
-    console.log(typeof timeStamp);
     const record = new Point('metrics')
       .tag('name', name)
       .floatField('value', value)
@@ -108,7 +108,6 @@ class InfluxModel {
       },
       complete() {
         logger.info('Finished SUCCESS');
-        console.log(tableRecords.length, '<<<===length');
         return success(res, OK, 'Metric Retrieved Successful', tableRecords);
       },
     };

@@ -11,6 +11,7 @@ var request_response_handler_1 = require("request-response-handler");
 var morgan_config_1 = __importDefault(require("../config/morgan.config"));
 // eslint-disable-next-line import/no-unresolved
 var winston_config_1 = __importDefault(require("../config/winston.config"));
+var routes_1 = __importDefault(require("../routes"));
 var app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
@@ -24,6 +25,7 @@ app.use(function (err, req, res, next) {
     res.render('error');
     next();
 });
+app.use('/api/v1', routes_1.default);
 app.get('/', function (req, res) {
     (0, request_response_handler_1.success)(res, request_response_handler_1.OK, 'Welcome to API root', {
         metric_url: {
