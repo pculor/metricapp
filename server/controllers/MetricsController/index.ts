@@ -1,10 +1,12 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import 'dotenv/config';
 import {
   success, CREATED, customError, SERVER_ERROR, BAD_REQUEST,
 } from 'request-response-handler';
-import logger from '../../config/winston.config.ts';
+import logger from '../../config/winston.config';
 
-const InfluxModel = require('../../database');
+import InfluxModel from '../../database/model';
 
 /**
  * Handles metrics
@@ -24,9 +26,8 @@ class MetricsController {
    */
   static async CreateMetric(req, res, next) {
     try {
-      const { name, value } = req.body;
+      const { name, value } = req.payload;
       const timeStamp = Date.now();
-
       // TODO create Metric
       const addMetric = await InfluxModel.Insert({ name, value, timeStamp });
       logger.info(addMetric);

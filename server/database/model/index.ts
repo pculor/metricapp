@@ -1,11 +1,13 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import 'dotenv/config';
 import { InfluxDB, Point } from '@influxdata/influxdb-client';
 import {
   success, OK, NOT_FOUND, customError,
 } from 'request-response-handler';
-import envConfigs from './config/config';
-// eslint-disable-next-line import/no-unresolved
-import logger from '../../server/config/winston.config';
+import envConfigs from '../config/config';
+import logger from '../../config/winston.config';
+import { Imetric } from '../../interfaces/metrics';
 
 const env = process.env.NODE_ENV || 'development';
 const config = envConfigs[env];
@@ -23,7 +25,7 @@ class InfluxModel {
 
   defaultTag = { dataSet: 'metric-app' };
 
-  static async Insert(params) {
+  static async Insert(params: Imetric) {
     const db = new InfluxModel();
 
     /**
@@ -40,10 +42,8 @@ class InfluxModel {
     /**
          * Create a point and write it to the buffer.
          * */
-    const { name } = params;
+    const { name, timeStamp } = params;
     const value = (params.value * 1).toFixed(2);
-    const { timeStamp } = params;
-    console.log(typeof timeStamp);
     const record = new Point('metrics')
       .tag('name', name)
       .floatField('value', value)
@@ -72,7 +72,7 @@ class InfluxModel {
       day: 'd',
     };
     const start = req.query.start || '12';
-    const interval = req.query.interval && timeObj[req.query.interval] || '';
+    const interval = (req.query.interval && timeObj[req.query.interval]) || '';
     const avg = req.query.avg ? req.query.avg : 3;
     /**
          * Instantiate the InfluxDB client
@@ -93,7 +93,6 @@ class InfluxModel {
     const queryObserver = {
       next(row, tableMeta) {
         const record = tableMeta.toObject(row);
-        logger.info(record);
         tableRecords.push(record);
       },
       error(error) {
@@ -108,7 +107,6 @@ class InfluxModel {
       },
       complete() {
         logger.info('Finished SUCCESS');
-        console.log(tableRecords.length, '<<<===length');
         return success(res, OK, 'Metric Retrieved Successful', tableRecords);
       },
     };
