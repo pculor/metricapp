@@ -17,7 +17,6 @@ const Form = () => {
         const { data: {
           body
         }} = res;
-        console.log(body, '<<==')
         setMetric(body)
       })
       .catch(error => {

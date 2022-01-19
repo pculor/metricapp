@@ -16,7 +16,6 @@ const Timeline = (props:any) => {
                 const { data: {
                     body
                 }} = res;
-                console.log(body, '<<<=== chart');
                 setRecords(body);
             }); 
         } else {
@@ -25,7 +24,6 @@ const Timeline = (props:any) => {
                 const { data: {
                     body
                 }} = res;
-                console.log(body, '<<<=== chart');
                 setRecords(body);
             });
         }
