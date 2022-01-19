@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from "styled-components";
 import { Dropdown } from "../common/DropDown";
+import { Iprops } from '../common/interfaces'
 
-interface Iprops {
-  [propName: string]: any;
-}
 
 const IntervalDropDown = (props:Iprops) => {
    const { selectInterval } = props;
-    const intervalArr = [{unit:'MINUTE', prefix: 'm'}, {unit: 'HOUR', prefix: 'h'}, {unit: 'DAY', prefix: 'd'}]
+    const intervalArr = [{unit:'MINUTE', prefix: 'min'}, {unit: 'HOUR', prefix: 'hour'}, {unit: 'DAY', prefix: 'day'}]
     const dropDownHandler = (input: any) => {
       selectInterval(input.target.value);
     };

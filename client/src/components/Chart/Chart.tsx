@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from "styled-components";
 import * as V from 'victory';
+import { Irecord } from '../common/interfaces'
 
 const {
     VictoryBar,
@@ -10,18 +11,6 @@ const {
     VictoryAxis,
   } = V;
 
-  interface Irecord {
-    result?: string,
-    table?: number,
-    _start?: string,
-    _stop?: string,
-    _time?: string,
-    _value?: number,
-    _field?: string,
-    _measurement?: string,
-    dataSet: string,
-    name?: string
-}
 
   const processedData = (records: Irecord[]) =>
     records.map((record:Irecord, i:number) => ({

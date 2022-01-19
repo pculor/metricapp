@@ -101,7 +101,7 @@ var InfluxModel = /** @class */ (function () {
                     day: 'd',
                 };
                 start = req.query.start || '12';
-                interval = req.query.interval && timeObj[req.query.interval] || '';
+                interval = (req.query.interval && timeObj[req.query.interval]) || '';
                 avg = req.query.avg ? req.query.avg : 3;
                 queryApi = db.influxDB.getQueryApi(db.org);
                 query = req.query.avg ? "from(bucket: \"".concat(db.bucket, "\") \n                        |> range(start: -").concat(start).concat(interval, ")\n                        |> movingAverage(n: ").concat(avg, ")\n                        ")

@@ -11,7 +11,7 @@ const Timeline = (props:any) => {
 
     const getMetrics = (interval: string) => {
         if(interval){
-            axios.get(`metrics?interval=${interval}?avg=5?start=1`)
+            axios.get(`metrics?interval=${interval}&avg=5&start=12`)
             .then((res)=>{
                 const { data: {
                     body
@@ -20,7 +20,7 @@ const Timeline = (props:any) => {
                 setRecords(body);
             }); 
         } else {
-            axios.get(`metrics?interval=${interval}?avg=5?start=1`)
+            axios.get(`metrics?interval=hour&avg=5&start=12`)
             .then((res)=>{
                 const { data: {
                     body
@@ -40,9 +40,14 @@ const Timeline = (props:any) => {
 
     if (!records.length) {
         return (
+          <Container className="table">
+          <IntervalDropDown
+          selectInterval={selectInterval}
+           />
           <div>
             <NoFeedback>No Metrics for selected Timeline</NoFeedback>
           </div>
+          </Container>
         );
       }
     return (

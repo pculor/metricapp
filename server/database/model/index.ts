@@ -72,7 +72,7 @@ class InfluxModel {
       day: 'd',
     };
     const start = req.query.start || '12';
-    const interval = req.query.interval && timeObj[req.query.interval] || '';
+    const interval = (req.query.interval && timeObj[req.query.interval]) || '';
     const avg = req.query.avg ? req.query.avg : 3;
     /**
          * Instantiate the InfluxDB client

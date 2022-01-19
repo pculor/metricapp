@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { axios } from '../../utils/axios';
 import styled from 'styled-components';
 import StyledInput from '../common/Input';
+import { Imetric } from '../common/interfaces'
 
-const Form = (props: any) => {
+const Form = () => {
   const [metric, setMetric] = useState({
     name: '',
     value: '',
@@ -25,10 +26,6 @@ const Form = (props: any) => {
   };
 
 
-  interface Imetric {
-    name: string;
-    value: string;
-  }
 
   const handleInputChange = (event: any) => {
     const target = event.target;
