@@ -36,24 +36,15 @@ const Timeline = (props:any) => {
 
     useEffect(()=>getMetrics(interval),[interval])
 
-    if (!records.length) {
-        return (
-          <Container className="table">
-          <IntervalDropDown
-          selectInterval={selectInterval}
-           />
-          <div>
-            <NoFeedback>No Metrics for selected Timeline</NoFeedback>
-          </div>
-          </Container>
-        );
-      }
     return (
         <Container className="table">
         <IntervalDropDown
         selectInterval={selectInterval}
          />
-        <Chart records={records}/>
+        <Chart 
+        records={records}
+        interval={interval}
+        />
         </Container>
     ) 
 }
@@ -71,16 +62,4 @@ const Container = styled.div`
     margin: 0 auto;
     margin-top: 5rem;
     
-`;
-
-
-const NoFeedback = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: ${({theme})=> theme.fonts.bodyHero}; 
-  background-color: ${({theme})=> theme.colors.white}; 
-  width: 75%;
-  height: 30vh;
-  margin: 0 auto;
 `;
