@@ -6,8 +6,8 @@
   "scripts": {
     "build": "rimraf bin && tsc",
     "test": "NODE_ENV=test jest --detectOpenHandles --coverage --runInBand --forceExit",
-    "prestart": "npm run build",
-    "start": "cross-env NODE_ENV=production concurrently \"node bin/app.js\" \"npm run client\"",
+    "prestart": "concurrently \"npm run build\" \"npm run client\"",
+    "start": "cross-env NODE_ENV=production node bin/app.js",
     "preserver": "npm run build",
     "server": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon --exec node bin/app.js\"",
     "client": "cd client && npm install && npm run build",

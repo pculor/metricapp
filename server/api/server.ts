@@ -1,10 +1,11 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import path from 'path';
 import { success, errorHandler, OK } from 'request-response-handler';
-// eslint-disable-next-line import/no-unresolved
 import morganMiddleware from '../config/morgan.config';
-// eslint-disable-next-line import/no-unresolved
 import logger from '../config/winston.config';
 import router from '../routes';
 
@@ -34,13 +35,22 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 app.use('/api/v1', router);
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/api', (req: Request, res: Response) => {
   success(res, OK, 'Welcome to API root', {
     metric_url: {
       root: '/api/v1/',
     },
   });
 });
+
+// All other GET requests not handled before will serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // TODO serve client
+  app.use(express.static(path.resolve(__dirname, '../../../client/build')));
+  app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.resolve(__dirname, '../../../client/build', 'index.html'));
+  });
+}
 
 app.get('*', (req: Request, res: Response) => {
   res.status(404).json({
