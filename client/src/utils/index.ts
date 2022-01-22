@@ -10,6 +10,6 @@ export const trimError = (error:any) => {
       return;
     }
     console.log(error.error.response.data.errors.message);
-    const response = error.error.response && error.error.response.data.errors && error.error.response.data.errors.message.trim() || '';
+    const response = (error.error.response && error.error.response.data.errors && error.error.response.data.errors.message.trim()) || '';
     return response;
   };
