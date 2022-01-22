@@ -44,6 +44,8 @@ const Chart = (props:any) => {
 
             <VictoryChart
                 domainPadding={20}
+                width={1000}
+                height={1000}
                 style={{ parent: { maxWidth: '90%' } }}
                 // adding the material theme provided with Victory
                 theme={VictoryTheme.material}

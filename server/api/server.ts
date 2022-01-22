@@ -35,7 +35,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 app.use('/api/v1', router);
 
-app.get('/api', (req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response) => {
   success(res, OK, 'Welcome to API root', {
     metric_url: {
       root: '/api/v1/',

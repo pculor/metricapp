@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
-import { axios } from '../../utils/axios';
+import { axios } from '../../utils';
 import Chart from "./Chart";
 import IntervalDropDown from "./IntervalDropDown";
 

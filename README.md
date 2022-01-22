@@ -1,6 +1,8 @@
 # METRIC APP
 
 **METRIC APP** A metric posting and visualization application.
+My thought process while working on this was to build and application like Kibana or grafana
+in that the API can read any metrics specified with a value.
 
 
 ## Getting Started
@@ -12,7 +14,7 @@ These instructions will get you a copy of the project up and running on your loc
 To get started with this project you need a basic knowledge of :
 
 ```
-Javascript (ES2021)
+Typescript
 ReactJS
 NodeJs
 Time-series database (InfluxDB)
@@ -25,10 +27,9 @@ The following instructions will install the project on your local machine
 
 1. Install [**Node JS**](https://nodejs.org/en/).
 2. Install [**InfluxDB**](https://docs.influxdata.com/) .
-3. Clone the [**repository here**]()
-4. [**cd**] into the root directory of the project folder `metriclogger` and run `npm install`.
-5. [**cd**] into `client` folder run `npm Install`.
-6. Run `npm install` on the terminal to install Dependencies and Dev-Dependencies
+3. Clone the [**repository here**](https://github.com/pculor/metricapp.git)
+4. [**cd**] into the root directory of the project folder `metricapp` and run `npm install`.
+5. Run `npm install` on the terminal to install Dependencies and Dev-Dependencies
 
 ### How to run
 
@@ -61,6 +62,7 @@ npm test
 
 ### Built With
 
+- [Typescript](https://www.typescriptlang.org/) - Typescript
 - [Node.js](https://nodejs.org/) - Javascript runtime
 - [ReactJS](https://reactjs.org/)- Frontend
 - [Express](https://expressjs.com/) - Web application framework
@@ -69,10 +71,44 @@ npm test
 
 ## Features
 
-The user interface is built for easy navigation and use of the application. It includes the following:
+The API and user interface is built for easy navigation and use of the application. It includes the following:
 
 ### API Architecture
 
+`To Create a metric`
+[POST] http://localhost:4000/api/v1/metrics
+
+Request Payload
+```
+{
+    "name": "finTech",
+    "value": "20"
+}
+```
+
+Response Format
+```
+{
+    "success": true,
+    "statusCode": 201,
+    "message": "Metric Created Successful",
+    "body": {
+        "tags": {
+            "name": "finTech"
+        },
+        "fields": {
+            "value": "20"
+        },
+        "name": "metrics",
+        "time": 1642824408412
+    }
+}
+```
+
+`To Retrieve` Metrics
+[GET] http://localhost:4000/api/v1/metrics
+```
+```
 
 ## Deployment
 

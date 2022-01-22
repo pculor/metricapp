@@ -7,6 +7,7 @@ import {
 } from 'request-response-handler';
 import envConfigs from '../config/config';
 import logger from '../../config/winston.config';
+import { Imetric } from '../../interfaces/metrics';
 
 const env = process.env.NODE_ENV || 'development';
 const config = envConfigs[env];
@@ -24,7 +25,7 @@ class InfluxModel {
 
   defaultTag = { dataSet: 'metric-app' };
 
-  static async Insert(params) {
+  static async Insert(params: Imetric) {
     const db = new InfluxModel();
 
     /**
@@ -41,9 +42,8 @@ class InfluxModel {
     /**
          * Create a point and write it to the buffer.
          * */
-    const { name } = params;
+    const { name, timeStamp } = params;
     const value = (params.value * 1).toFixed(2);
-    const { timeStamp } = params;
     const record = new Point('metrics')
       .tag('name', name)
       .floatField('value', value)

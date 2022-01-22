@@ -1,6 +1,6 @@
 import JoisBase from '@hapi/joi';
 import JoiDate from '@hapi/joi-date';
-import { customError } from 'request-response-handler';
+import { customError, BAD_REQUEST } from 'request-response-handler';
 
 export const Joi = JoisBase.extend(JoiDate);
 
@@ -20,7 +20,9 @@ export const joiValidate = (payload, schema, req, res, next) => {
   // TODO check for validation error
   if (error) {
     const errors = error.details.map((current) => current.message.replace(/['"]/g, ''));
-    return customError(errors[0], 400);
+    return next(
+      customError({ status: BAD_REQUEST, message: errors[0] }),
+    );
   }
 
   return value;

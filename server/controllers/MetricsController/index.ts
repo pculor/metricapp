@@ -26,9 +26,8 @@ class MetricsController {
    */
   static async CreateMetric(req, res, next) {
     try {
-      const { name, value } = req.body;
+      const { name, value } = req.payload;
       const timeStamp = Date.now();
-
       // TODO create Metric
       const addMetric = await InfluxModel.Insert({ name, value, timeStamp });
       logger.info(addMetric);

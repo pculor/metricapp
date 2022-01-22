@@ -42,16 +42,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 var supertest_1 = __importDefault(require("supertest"));
-var server_1 = __importDefault(require("../../api/server"));
+var request_response_handler_1 = require("request-response-handler");
+var server_1 = __importDefault(require("../api/server"));
+var data_1 = __importDefault(require("./mocks/data"));
 var baseUrl = '/api/v1';
-describe('server', function () {
+describe('MetricsController ', function () {
     it('[GET]/ a all metric in response', function () { return __awaiter(void 0, void 0, void 0, function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
                         .get("".concat(baseUrl, "/metrics"))
-                        .expect(200)
+                        .expect(request_response_handler_1.OK)
                         .expect('Content-Type', /json/)];
                 case 1:
                     res = _a.sent();
@@ -61,8 +63,68 @@ describe('server', function () {
                         expect.objectContaining({ result: '_result' }),
                     ]));
                     expect(res.body.message).toEqual('Metric Retrieved Successful');
-                    expect(res.body.statusCode).toEqual(200);
+                    expect(res.body.statusCode).toEqual(request_response_handler_1.OK);
                     expect(res.body.success).toEqual(true);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+});
+// TODO EDGE CASES
+describe('MetricsController should return an error', function () {
+    it('[POST]/ should not create metric if value is a string', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
+                        .post("".concat(baseUrl, "/metrics"))
+                        .set('Content-Type', 'application/json')
+                        .send(data_1.default.wrongInputValue)
+                        .expect(request_response_handler_1.BAD_REQUEST)
+                        .expect('Content-Type', /json/)];
+                case 1:
+                    res = _a.sent();
+                    expect(res.body.success).toEqual(false);
+                    expect(res.body.errors.message).toEqual('value must be a number');
+                    expect(res.status).toEqual(request_response_handler_1.BAD_REQUEST);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('[POST]/ should not create metric if name is a number', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
+                        .post("".concat(baseUrl, "/metrics"))
+                        .set('Content-Type', 'application/json')
+                        .send(data_1.default.wrongInputName)
+                        .expect(request_response_handler_1.BAD_REQUEST)
+                        .expect('Content-Type', /json/)];
+                case 1:
+                    res = _a.sent();
+                    expect(res.body.success).toEqual(false);
+                    expect(res.body.errors.message).toEqual('name must be a string');
+                    expect(res.status).toEqual(request_response_handler_1.BAD_REQUEST);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('[POST]/ should return an error message if input is empty', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
+                        .post("".concat(baseUrl, "/metrics"))
+                        .set('Content-Type', 'application/json')
+                        .send(data_1.default.emptyInput)
+                        .expect(request_response_handler_1.BAD_REQUEST)
+                        .expect('Content-Type', /json/)];
+                case 1:
+                    res = _a.sent();
+                    expect(res.body.success).toEqual(false);
+                    expect(res.body.errors.message).toEqual('name is not allowed to be empty');
+                    expect(res.status).toEqual(request_response_handler_1.BAD_REQUEST);
                     return [2 /*return*/];
             }
         });

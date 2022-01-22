@@ -59,7 +59,7 @@ var InfluxModel = /** @class */ (function () {
     }
     InfluxModel.Insert = function (params) {
         return __awaiter(this, void 0, void 0, function () {
-            var db, writeApi, name, value, timeStamp, record;
+            var db, writeApi, name, timeStamp, value, record;
             return __generator(this, function (_a) {
                 db = new InfluxModel();
                 writeApi = db.influxDB.getWriteApi(db.org, db.bucket, 'ms');
@@ -67,9 +67,8 @@ var InfluxModel = /** @class */ (function () {
                      * Apply default tags to all points.
                      * */
                 writeApi.useDefaultTags(db.defaultTag);
-                name = params.name;
+                name = params.name, timeStamp = params.timeStamp;
                 value = (params.value * 1).toFixed(2);
-                timeStamp = params.timeStamp;
                 record = new influxdb_client_1.Point('metrics')
                     .tag('name', name)
                     .floatField('value', value)

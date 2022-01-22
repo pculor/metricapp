@@ -70,7 +70,7 @@ var MetricsController = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 2, , 3]);
-                        _a = req.body, name_1 = _a.name, value = _a.value;
+                        _a = req.payload, name_1 = _a.name, value = _a.value;
                         timeStamp = Date.now();
                         return [4 /*yield*/, model_1.default.Insert({ name: name_1, value: value, timeStamp: timeStamp })];
                     case 1:

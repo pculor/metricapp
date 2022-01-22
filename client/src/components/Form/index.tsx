@@ -1,26 +1,34 @@
 import React, { useState } from 'react';
-import { axios } from '../../utils/axios';
+import { toast } from 'react-toastify';
+import { axios } from '../../utils';
 import styled from 'styled-components';
 import StyledInput from '../common/Input';
-import { Imetric } from '../common/interfaces'
+import { Imetric, Ierror } from '../common/interfaces'
 
 const Form = () => {
   const [metric, setMetric] = useState({
     name: '',
     value: '',
   });
+  const initialError: Ierror = {isError: false, error: ''};
+  const [error, setError] = useState(initialError);
 
   const postMetric = (event:any) => {
+    event.preventDefault();
     axios
       .post(`metrics`, metric)
       .then((res) => {
         const { data: {
           body
         }} = res;
-        setMetric(body)
+        toast.success(`${body.tags.name} metric logged successfully`);
+        setMetric({
+          name: '',
+          value: '',
+        })
       })
       .catch(error => {
-        return error.statusText;
+        setError({isError: true, error})
       });
   };
 
@@ -32,6 +40,13 @@ const Form = () => {
     const name = target.name;
     setMetric((metric: Imetric) => ({ ...metric, [name]: value }));
   };
+
+  if (error.isError) {
+    // console.log(error.isError);
+    console.log(error.error.response.data.errors.message);
+    toast.error('Invalid Input');
+    setError(initialError);
+  }
 
   return (
     <Container className="table">

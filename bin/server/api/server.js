@@ -27,7 +27,7 @@ app.use(function (err, req, res, next) {
     next();
 });
 app.use('/api/v1', routes_1.default);
-app.get('/api', function (req, res) {
+app.get('/', function (req, res) {
     (0, request_response_handler_1.success)(res, request_response_handler_1.OK, 'Welcome to API root', {
         metric_url: {
             root: '/api/v1/',

@@ -19,3 +19,8 @@ export interface Imetric {
     name: string;
     value: string;
   }
+
+export interface Ierror {
+  isError?: boolean;
+  error?: any;
+}
