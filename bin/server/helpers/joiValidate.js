@@ -20,7 +20,6 @@ var joiValidate = function (payload, schema, req, res, next) {
     var _a = schema.validate(payload, {
         allowUnknown: true,
     }), error = _a.error, value = _a.value;
-    // TODO check for validation error
     if (error) {
         var errors = error.details.map(function (current) { return current.message.replace(/['"]/g, ''); });
         return next((0, request_response_handler_1.customError)({ status: request_response_handler_1.BAD_REQUEST, message: errors[0] }));

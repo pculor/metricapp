@@ -49,6 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
+var request_response_handler_1 = require("request-response-handler");
 var joiValidate_1 = require("../helpers/joiValidate");
 /**
  * Validations
@@ -84,6 +85,10 @@ var Validations = /** @class */ (function () {
                                 'any.required': 'value is not allowed to be empty',
                             }),
                         });
+                        // TODO check that metric name is not all numbers
+                        if (/^\d*$/.test(payload.name) && payload.name && typeof payload.name !== 'number') {
+                            return [2 /*return*/, next((0, request_response_handler_1.customError)({ status: request_response_handler_1.BAD_REQUEST, message: 'metric name cannot be all numbers' }))];
+                        }
                         _a = req;
                         return [4 /*yield*/, (0, joiValidate_1.joiValidate)(payload, schema, req, res, next)];
                     case 1:

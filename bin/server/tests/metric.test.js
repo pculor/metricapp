@@ -110,6 +110,25 @@ describe('MetricsController should return an error', function () {
             }
         });
     }); });
+    it('[POST]/ should not create metric if name is a number string', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, supertest_1.default)(server_1.default)
+                        .post("".concat(baseUrl, "/metrics"))
+                        .set('Content-Type', 'application/json')
+                        .send(data_1.default.wrongInputName2)
+                        .expect(request_response_handler_1.BAD_REQUEST)
+                        .expect('Content-Type', /json/)];
+                case 1:
+                    res = _a.sent();
+                    expect(res.body.success).toEqual(false);
+                    expect(res.body.errors.message).toEqual('metric name cannot be all numbers');
+                    expect(res.status).toEqual(request_response_handler_1.BAD_REQUEST);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     it('[POST]/ should return an error message if input is empty', function () { return __awaiter(void 0, void 0, void 0, function () {
         var res;
         return __generator(this, function (_a) {

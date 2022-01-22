@@ -17,6 +17,11 @@ const mockData = {
     name: 123,
     value: 10,
   },
+
+  wrongInputName2: {
+    name: '123',
+    value: 10,
+  },
 };
 
 export default mockData;

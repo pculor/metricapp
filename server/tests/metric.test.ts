@@ -2,7 +2,7 @@
 /* eslint-disable import/extensions */
 import request from 'supertest';
 import {
-  OK, CREATED, SERVER_ERROR, BAD_REQUEST,
+  OK, BAD_REQUEST,
 } from 'request-response-handler';
 import server from '../api/server';
 import mockData from './mocks/data';
@@ -51,6 +51,18 @@ describe('MetricsController should return an error', () => {
       .expect('Content-Type', /json/);
     expect(res.body.success).toEqual(false);
     expect(res.body.errors.message).toEqual('name must be a string');
+    expect(res.status).toEqual(BAD_REQUEST);
+  });
+
+  it('[POST]/ should not create metric if name is a number string', async () => {
+    const res = await request(server)
+      .post(`${baseUrl}/metrics`)
+      .set('Content-Type', 'application/json')
+      .send(mockData.wrongInputName2)
+      .expect(BAD_REQUEST)
+      .expect('Content-Type', /json/);
+    expect(res.body.success).toEqual(false);
+    expect(res.body.errors.message).toEqual('metric name cannot be all numbers');
     expect(res.status).toEqual(BAD_REQUEST);
   });
 

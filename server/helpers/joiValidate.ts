@@ -17,7 +17,6 @@ export const joiValidate = (payload, schema, req, res, next) => {
     allowUnknown: true,
   });
 
-  // TODO check for validation error
   if (error) {
     const errors = error.details.map((current) => current.message.replace(/['"]/g, ''));
     return next(

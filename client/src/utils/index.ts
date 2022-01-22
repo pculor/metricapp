@@ -9,6 +9,7 @@ export const trimError = (error:any) => {
     if (!error) {
       return;
     }
-    const response = error.message.trim();
+    console.log(error.error.response.data.errors.message);
+    const response = error.error.response && error.error.response.data.errors && error.error.response.data.errors.message.trim() || '';
     return response;
   };

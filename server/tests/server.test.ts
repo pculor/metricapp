@@ -2,7 +2,7 @@
 /* eslint-disable import/extensions */
 import request from 'supertest';
 import {
-  OK, CREATED, SERVER_ERROR, BAD_REQUEST, NOT_FOUND,
+  OK, NOT_FOUND,
 } from 'request-response-handler';
 import server from '../api/server';
 

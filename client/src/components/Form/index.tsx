@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { axios } from '../../utils';
+import { axios, trimError } from '../../utils';
 import styled from 'styled-components';
 import StyledInput from '../common/Input';
 import { Imetric, Ierror } from '../common/interfaces'
@@ -42,9 +42,8 @@ const Form = () => {
   };
 
   if (error.isError) {
-    // console.log(error.isError);
     console.log(error.error.response.data.errors.message);
-    toast.error('Invalid Input');
+    toast.error(trimError(error) || 'Invalid Input');
     setError(initialError);
   }
 
