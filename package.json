@@ -18,7 +18,7 @@
     "start:dev": "concurrently \"npm run server\" \"npm run client:dev\"",
     "lint": "eslint --fix server/",
     "format": "npx prettier --write .",
-    "heroku-postbuild": "cd client && npm install && npm install && npm run build",
+    "heroku-postbuild": "npm run client",
     "postinstall": "tsc"
   },
   "author": "Pascal Ulor",
