@@ -112,7 +112,7 @@ Response Format
 
 ## Deployment
 
-This Application will be deployed on [HEROKU](#)
+This Application is deployed on [HEROKU](https://mymetricapp.herokuapp.com/)
 
 ## Useful Links
 
