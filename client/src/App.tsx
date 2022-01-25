@@ -11,7 +11,7 @@ function App() {
     <div>
       <Nav/>
       <Switch>
-        <Route exact path="/" component={Form} />
+        <Route exact path="/home" component={Form} />
         <Route exact path="/chart" component={Timeline} />
       </Switch>
     </div>

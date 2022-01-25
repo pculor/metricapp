@@ -8,7 +8,7 @@ import styled from "styled-components";
 const Nav = () =>{
     return (
         <StyledDiv> 
-            <Link to='/' >Home</Link>
+            <Link to='/home' >Home</Link>
             <Link to='/chart'>Chart</Link>   
         </StyledDiv>
     )

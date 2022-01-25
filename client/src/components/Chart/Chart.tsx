@@ -27,7 +27,7 @@ const {
 const Chart = (props:any) => {
     const { records, interval } = props;
 
-    if (!records.length) {
+    if (records && !records.length) {
       return (
         <Container className="table">
         <div>
