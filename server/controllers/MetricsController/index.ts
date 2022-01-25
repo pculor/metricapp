@@ -2,7 +2,7 @@
 /* eslint-disable import/no-unresolved */
 import 'dotenv/config';
 import {
-  success, CREATED, customError, SERVER_ERROR, BAD_REQUEST,
+  success, OK, CREATED, customError, SERVER_ERROR, BAD_REQUEST,
 } from 'request-response-handler';
 import logger from '../../config/winston.config';
 
@@ -62,8 +62,17 @@ class MetricsController {
    */
   static async GetMetrics(req, res, next) {
     try {
+      const timeObj = {
+        min: 'm',
+        hour: 'h',
+        day: 'd',
+      };
+      const start = req.query.start || '12';
+      const interval = (req.query.interval && timeObj[req.query.interval]) || '';
+      const avg = req.query.avg ? req.query.avg : 3;
       // TODO query Metric
-      return InfluxModel.Select(req, res, next);
+      const result = await InfluxModel.Select({ start, interval, avg });
+      return success(res, OK, 'Metric Retrieved Successful', result);
     } catch (error) {
       return next(
         customError({

@@ -2,12 +2,9 @@
 /* eslint-disable import/no-unresolved */
 import 'dotenv/config';
 import { InfluxDB, Point } from '@influxdata/influxdb-client';
-import {
-  success, OK, NOT_FOUND, customError,
-} from 'request-response-handler';
 import envConfigs from '../config/config';
 import logger from '../../config/winston.config';
-import { Imetric } from '../../interfaces/metrics';
+import { Imetric, Iquery } from '../../interfaces/metrics';
 
 const env = process.env.NODE_ENV || 'development';
 const config = envConfigs[env];
@@ -64,53 +61,45 @@ class InfluxModel {
     return record;
   }
 
-  static async Select(req, res, next) {
+  static async Select(params: Iquery) {
     const db = new InfluxModel();
-    const timeObj = {
-      min: 'm',
-      hour: 'h',
-      day: 'd',
-    };
-    const start = req.query.start || '12';
-    const interval = (req.query.interval && timeObj[req.query.interval]) || '';
-    const avg = req.query.avg ? req.query.avg : 3;
+    const { start, interval, avg } = params;
+
+    const selectQuery = new Promise((resolve, reject) => {
+      const queryApi = db.influxDB.getQueryApi(db.org);
+
+      const query = avg ? `from(bucket: "${db.bucket}") 
+                        |> range(start: -${start}${interval})
+                        |> movingAverage(n: ${avg})
+                        `
+        : `from(bucket: "${db.bucket}") 
+                        |> range(start: -${start}${interval})
+                        `;
+      const tableRecords = [];
+      const queryObserver = {
+        next(row, tableMeta) {
+          const record = tableMeta.toObject(row);
+          tableRecords.push(record);
+        },
+        error(error) {
+          logger.info(error);
+          logger.info('Finished ERROR');
+          reject(error);
+        },
+        complete() {
+          logger.info('Finished SUCCESS');
+          resolve(tableRecords);
+        },
+      };
+      queryApi.queryRows(query, queryObserver);
+    });
     /**
          * Instantiate the InfluxDB client
          * with a configuration object.
          *
          * Get a query client configured for your org.
          * */
-    const queryApi = db.influxDB.getQueryApi(db.org);
-
-    const query = req.query.avg ? `from(bucket: "${db.bucket}") 
-                        |> range(start: -${start}${interval})
-                        |> movingAverage(n: ${avg})
-                        `
-      : `from(bucket: "${db.bucket}") 
-                        |> range(start: -${start}${interval})
-                        `;
-    const tableRecords = [];
-    const queryObserver = {
-      next(row, tableMeta) {
-        const record = tableMeta.toObject(row);
-        tableRecords.push(record);
-      },
-      error(error) {
-        logger.info(error);
-        logger.info('Finished ERROR');
-        return next(
-          customError({
-            status: NOT_FOUND,
-            message: `Metrics not found ${error}`,
-          }),
-        );
-      },
-      complete() {
-        logger.info('Finished SUCCESS');
-        return success(res, OK, 'Metric Retrieved Successful', tableRecords);
-      },
-    };
-    queryApi.queryRows(query, queryObserver);
+    return selectQuery;
   }
 }
 
