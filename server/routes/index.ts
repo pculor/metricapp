@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import { Router } from 'express';
 import metricRoute from './metricRoutes';
 

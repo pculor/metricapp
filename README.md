@@ -68,6 +68,7 @@ npm test
 - [Express](https://expressjs.com/) - Web application framework
 - [InfluxDB](https://docs.influxdata.com/) - Database
 - [Jest](https://jestjs.io/) and Supertest - testing framework
+- [Docker](https://docs.docker.com/)
 
 ## Features
 
@@ -107,9 +108,12 @@ Response Format
 
 `To Retrieve` Metrics
 [GET] http://localhost:4000/api/v1/metrics
-```
-```
 
+
+### Frontend Architecture
+The Frontend is built with React
+
+[GET] http://localhost:4000/home
 ## Deployment
 
 This Application is deployed on [HEROKU](https://mymetricapp.herokuapp.com/)

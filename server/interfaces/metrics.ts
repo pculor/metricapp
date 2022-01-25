@@ -9,8 +9,3 @@ export interface Iquery {
     interval?: string;
     avg?: number;
 }
-
-export interface Iresponse {
-    isError: boolean;
-    payload: any;
-}
