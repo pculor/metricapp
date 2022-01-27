@@ -50,6 +50,14 @@ If all goes well, you should see something similar to this on the console:
 Application started on http://localhost:4000
 ```
 
+### How To Run With Docker
+
+1. Ensure you have docker running
+2. execute the bash start script from your terminal
+```
+chmod +x ./start.sh 
+```
+3. follow the API guide below
 ## Integration tests
 
 To test the endpoints, create a test database and run the following:

@@ -63,11 +63,11 @@ yarn.lock
 .ebextensions
 .elasticbeanstalk
 
-.docker
-docker
-/.docker/
-dev.docker-entrypoint.sh
-start.sh
+# .docker
+# docker
+# /.docker/
+# dev.docker-entrypoint.sh
+# start.sh
 
 
 # Nuxt.js build / generate output
